@@ -1,0 +1,38 @@
+{
+  "name": "tumble",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Free-to-play social game room: casino originals, sportsbook and rewards with free coins only.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "dev:web": "vite client",
+    "build": "vite build client",
+    "test": "node test/engine.test.js && node test/sports.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.2.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.5",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "socket.io": "^4.8.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "socket.io-client": "^4.8.4",
+    "vite": "^8.3.8"
+  },
+  "main": "server/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

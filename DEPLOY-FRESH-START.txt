@@ -1,0 +1,22 @@
+TUMBLEPLAY v3 — FRESH COMPLETE REPOSITORY (ALL-IN-ONE)
+======================================================
+Everything is ALREADY merged and bug-fixed inside this single ZIP.
+You do NOT need any old ZIP files.
+
+1. Unzip this file on your computer.
+2. Open your new GitHub repo -> Add file -> Upload files.
+3. Select ALL files and folders inside the unzipped folder (Ctrl+A) and drag them into GitHub -> Commit changes.
+   Make sure you see package.json, server/, client/, and shared/ on your main GitHub page.
+4. On Render (or Northflank):
+   - Build Command: npm install && npm run build
+   - Start Command: npm start
+5. Environment Variables:
+   - NODE_ENV = production
+   - JWT_SECRET = tumbleplay_secret_2026_x9k2m8p4q7z1
+   - ADMIN_USERNAMES = <your_admin_username>
+   - SUPABASE_URL = <your Supabase project URL>
+   - SUPABASE_SERVICE_KEY = <your Supabase service_role key>
+   - SUPABASE_BUCKET = tumble-data
+   - SUPABASE_OBJECT = tumble.db
+   - TELEGRAM_BOT_TOKEN = <your @TumblePlayBot token from @BotFather>
+   - WEBAPP_URL = <your live site URL>
