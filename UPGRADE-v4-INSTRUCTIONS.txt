@@ -1,0 +1,11 @@
+TUMBLEPLAY v4 — STAKE.US AAA MOTION, LIGHTING, PHYSICS & AUDIO UPGRADE
+======================================================================
+Drop-in upgrade for your existing TumblePlay GitHub repository.
+Preserves all existing users, Supabase sync, Telegram bot, and Admin controls.
+
+HOW TO APPLY (2 MINUTES):
+1. Unzip TumblePlay-v4-AAA-MOTION-UPGRADE.zip on your computer.
+2. Open your GitHub repository -> Add file -> Upload files.
+3. Drag the `client` folder, `server` folder, and `.npmrc` directly into GitHub -> Commit changes.
+   (GitHub automatically replaces the upgraded files in their exact subfolders.)
+4. Render auto-deploys in ~2 minutes. Hard-refresh (Ctrl + Shift + R) to see all 60fps animations!
