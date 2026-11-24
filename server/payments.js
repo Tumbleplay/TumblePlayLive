@@ -251,8 +251,48 @@ export function handleNowPaymentsWebhook(req) {
 }
 
 // Backward-compatible legacy exports so existing Admin tabs keep working cleanly
-export function getPaymentConfig() { return getWalletSettings(); }
-export function savePaymentConfig(body) { return saveWalletSettings(body); }
+export function getPaymentConfig() {
+  const s = getWalletSettings();
+  return {
+    upiId: getSetting('upi_id', ''),
+    upiName: getSetting('upi_name', s.brandName),
+    inrRate: s.coinsPerInr,
+    minInr: s.minDepositInr,
+    maxInr: s.maxDepositInr,
+    usdRate: s.usdtRateInr * s.coinsPerInr,
+    minUsd: 1,
+    maxUsd: 1000,
+    upiEnabled: s.enableAmazonGc,
+    cryptoEnabled: s.enableBinanceCrypto,
+    wallets: [
+      { id: 'binance_pay', label: 'Binance Pay ID (₹0 Fee)', address: s.binancePayId },
+      { id: 'usdt_bep20', label: 'USDT (BEP20)', address: s.usdtBep20 },
+      { id: 'usdt_ton', label: 'USDT (TON)', address: s.usdtTon }
+    ]
+  };
+}
+
+export function savePaymentConfig(body = {}) {
+  if (body.upiId !== undefined) setSetting('upi_id', String(body.upiId).trim());
+  if (body.upiName !== undefined) setSetting('upi_name', String(body.upiName).trim());
+  if (body.inrRate !== undefined) setSetting('coins_per_inr', Number(body.inrRate) || 1);
+  if (body.minInr !== undefined) setSetting('min_deposit_inr', Number(body.minInr) || 100);
+  if (body.maxInr !== undefined) setSetting('max_deposit_inr', Number(body.maxInr) || 2000);
+  if (body.usdRate !== undefined) {
+    const inrRate = Number(body.inrRate) || Number(getSetting('coins_per_inr', '1')) || 1;
+    setSetting('usdt_rate_inr', Math.max(1, Math.round((Number(body.usdRate) || 85) / inrRate)));
+  }
+  if (body.upiEnabled !== undefined) setSetting('enable_amazon_gc', body.upiEnabled ? '1' : '0');
+  if (body.cryptoEnabled !== undefined) setSetting('enable_binance_crypto', body.cryptoEnabled ? '1' : '0');
+  if (Array.isArray(body.wallets)) {
+    for (const w of body.wallets) {
+      if (w.id === 'binance_pay') setSetting('binance_pay_id', String(w.address || '').trim());
+      if (w.id === 'usdt_bep20') setSetting('usdt_bep20', String(w.address || '').trim());
+      if (w.id === 'usdt_ton') setSetting('usdt_ton', String(w.address || '').trim());
+    }
+  }
+  return getPaymentConfig();
+}
 export function adminListDeposits(status = 'pending') {
   const where = status && status !== 'all' ? 'WHERE d.status=?' : '';
   const sql = `SELECT d.*, u.username FROM deposits d JOIN users u ON u.id = d.user_id ${where} ORDER BY d.id DESC LIMIT 150`;
